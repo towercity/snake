@@ -3,6 +3,7 @@
 	padding: 0;
 }
 
-#game-area {
-	border: 1px solid;
+#game-container {
+	width: 504px;
+	margin: 15px auto;
 }
