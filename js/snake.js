@@ -2,24 +2,24 @@
 	Snake game based in part on tutorial from http://www.andrespagella.com/snake-game
 */
 
-//global variables
+//variables
 
-//canvas variables
 var canvas = document.getElementById('game-area'),
 	ctx = canvas.getContext('2d'),
-//game variables
 	score = 0,
 	level = 0,
 	direction = 0;
-//init the map matrix
+
 var map = new Array(50);
 for (var i = 0; i < map.length; i++) {
 	map[i] = new Array(50);
 }
 
+var snake = new Array(3);
+
 //functions
 
-//cleras the canvas, redraws the frame
+//clears the canvas, redraws the frame
 function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawMain();
@@ -37,7 +37,6 @@ function drawMain() {
 	ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
 }
 
-//generates food for our hungry hero
 function generateFood(map) {
 	//Generates random x and y for food
 	var rndX = Math.round(Math.random() * 19),
@@ -54,7 +53,28 @@ function generateFood(map) {
 	return map;
 }
 
+function generateSanke(map) {
+	var rndX = Math.round(Math.random() * 19),
+		rndY = Math.round(Math.random() * 19);
+
+	//makes sure our hero isn't born outside our walled city
+	//also makes sure his tail is inside the walls
+	while ((rndX - snake.length) < 0) {
+		rndX = Math.round(Math.random() * 19);
+	}
+
+	//draws our snake onto the map
+	for (var i = 1; i < snake.length; i++) {
+		snake[i] = {x: rndX - i, y: rndY};
+		map[rndY - 1][rndY] = 2;
+	}
+
+	return map;
+}
+
 //canvas manipulation
 
+map = generateFood(map);
+map = generateSanke(map);
 drawGame();
 
