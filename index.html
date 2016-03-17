@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>Snake</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<!--game area div-->
+	<div id="game-area"></div>
+	<script type="text/javascript" src="js/snake.js"></script>
+	<script type="text/javascript">
+		var snakeBoard = new Snake.board({
+			boardContainer: "game-area",
+			fullScreen: false,
+			width: 500,
+			height: 500
+		});
+	</script>
+</body>
+</html>
