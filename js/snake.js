@@ -23,6 +23,20 @@ var snake = new Array(3);
 function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawMain();
+
+	//Cycles the matrix and draws the graphics
+	for (var x = 0; x < map.length; x++) {
+		for (var y = 0; y < map[x].length; y++) {
+			if (map[x][y] === 1) {
+				ctx.fillStyle = 'black';
+				ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
+			}
+			if (map[x][y] === 2) {
+				ctx.fillStyle = 'orange';
+				ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
+			}
+		}
+	}
 }
 
 //draws the frame of the game
@@ -53,7 +67,7 @@ function generateFood(map) {
 	return map;
 }
 
-function generateSanke(map) {
+function generateSnake(map) {
 	var rndX = Math.round(Math.random() * 19),
 		rndY = Math.round(Math.random() * 19);
 
@@ -64,9 +78,9 @@ function generateSanke(map) {
 	}
 
 	//draws our snake onto the map
-	for (var i = 1; i < snake.length; i++) {
+	for (var i = 0; i < snake.length; i++) {
 		snake[i] = {x: rndX - i, y: rndY};
-		map[rndY - 1][rndY] = 2;
+		map[rndY - i][rndY] = 2;
 	}
 
 	return map;
@@ -75,6 +89,6 @@ function generateSanke(map) {
 //canvas manipulation
 
 map = generateFood(map);
-map = generateSanke(map);
+map = generateSnake(map);
 drawGame();
 
