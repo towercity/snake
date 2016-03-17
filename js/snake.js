@@ -80,10 +80,21 @@ function generateSnake(map) {
 	//draws our snake onto the map
 	for (var i = 0; i < snake.length; i++) {
 		snake[i] = {x: rndX - i, y: rndY};
-		map[rndY - i][rndY] = 2;
+		map[rndX - i][rndY] = 2;
 	}
 
 	return map;
+}
+
+function showGameOver() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	ctx.fillStyle = 'black';
+	ctx.font = '16px sans-serif';
+	ctx.fillText('Game over', ((canvas.width / 2) - (ctx.measureText('Game over') / 2)), (canvas.height / 2));
+
+	ctx.font = '14px sans-serif';
+	ctx.fillText('Your score was ' + score, ((canvas.width / 2) - (ctx.measureText('Your score was ' + score) / 2)), ((canvas.height / 2) + 25));
 }
 
 //canvas manipulation
@@ -91,4 +102,3 @@ function generateSnake(map) {
 map = generateFood(map);
 map = generateSnake(map);
 drawGame();
-
