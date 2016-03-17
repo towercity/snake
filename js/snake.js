@@ -1,5 +1,5 @@
 /*
-	Snake game based in part on tutorial from http://www.andrespagella.com/snake-game
+	Snake game based on tutorial from http://www.andrespagella.com/snake-game
 */
 
 //variables
@@ -22,6 +22,70 @@ var snake = new Array(3);
 //clears the canvas, redraws the frame
 function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	//moves down the snake pieces, starting at the bottom
+	for (var i = snake.length - 1; i >= 0; i--) {
+		//functions for the snake's head (snake[0])
+		if (i === 0) {
+			switch (direction) {
+				case 0: //right
+					snake[0] = {x: snake[0].x + 1, y: snake[0].y};
+					break;
+				case 1: //left
+					snake[0] = {x: snake[0].x + 1, y: snake[0].y};
+					break;
+				case 2: //up
+					snake[0] = {x: snake[0].x, y: snake[0].y - 1};
+					break;
+				case 3: //down
+					snake[0] = {x: snake[0].x, y: snake[0].y + 1};
+					break;
+			}
+
+			//checks if snake is out of bounds, returns game over
+			if (snake[0].x < 0 ||
+				snake[0].x >= 50 ||
+				snake[0].y < 0 ||
+				snake[0].y >= 50) {
+				showGameOver();
+				return;
+			}
+
+			//checks for food; increases score, and regenerates food
+			if (map[snake[0].x][snake[0].y] === 1) {
+				score += 1;
+				map = generateFood(map);
+
+				//adds length to snake
+				snake.push({x: snake[snake.length - 1].x, y: snake[snake.length - 1].y});
+				map[snake[snake.length - 1].x][snake[snake.length - 1].y] = 2;
+
+				//levels up after 10 points
+				if ((score % 10) === 0) {
+					level += 1;
+				}
+
+			//checks if snake has hit itself	
+			} else if (map[snake[0].x][snake[0].y] === 2) {
+				showGameOver();
+				return;
+			}
+
+			//keeps the head as part of the snake
+			map[snake[0].x][snake[0].y] = 2;
+		} else {
+			//removes the last piece of the snake
+			if (i === (snake.length - 1)) {
+				map[snake[i].x][snake[i].y] = null;
+			} 		
+
+			//moves the snake up
+			snake[i] = {x: snake[i - 1].x, y: snake[i - 1].y};
+			map[snake[i].x][snake[i].y] = 2;
+		}
+	}
+
+	//put up the canvas frame and score
 	drawMain();
 
 	//Cycles the matrix and draws the graphics
@@ -36,6 +100,11 @@ function drawGame() {
 				ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
 			}
 		}
+	}
+
+	//uses active variable to make sure game isnt over before continuing
+	if (active) {
+		//drawGame();
 	}
 }
 
@@ -86,6 +155,7 @@ function generateSnake(map) {
 	return map;
 }
 
+//potentially buggy--not showing when called in the console
 function showGameOver() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
