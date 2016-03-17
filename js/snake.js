@@ -9,10 +9,10 @@ var canvas = document.getElementById('game-area'),
 	ctx = canvas.getContext('2d'),
 //Gameplay variables
 	score = 0,
-	level = 0,
+	level = 1,
 	direction = 0,
 	snake = new Array(3),
-	speed = 500,
+	speed = 100,
 	active = true,
 //explanatory variables
 	snakeFood = 1,
@@ -125,7 +125,7 @@ function drawGame() {
 
 	//uses active variable to make sure game isnt over before continuing
 	if (active) {
-		setTimeout(drawGame, speed - (level * 50));
+		setTimeout(drawGame, speed - ((level - 1) * 50));
 	}
 }
 
