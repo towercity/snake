@@ -4,12 +4,19 @@
 
 //variables
 
+//canvas variables
 var canvas = document.getElementById('game-area'),
 	ctx = canvas.getContext('2d'),
+//Gameplay variables
 	score = 0,
 	level = 0,
-	direction = 0;
+	direction = 0,
+//explanatory variables
+	snakeFood = 1,
+	snakeBody = 2;
+	//snakeHead = 3;
 
+//matrices
 var map = new Array(50);
 for (var i = 0; i < map.length; i++) {
 	map[i] = new Array(50);
@@ -52,7 +59,7 @@ function drawGame() {
 			}
 
 			//checks for food; increases score, and regenerates food
-			if (map[snake[0].x][snake[0].y] === 1) {
+			if (map[snake[0].x][snake[0].y] === snakeFood) {
 				score += 1;
 				map = generateFood(map);
 
@@ -66,13 +73,13 @@ function drawGame() {
 				}
 
 			//checks if snake has hit itself	
-			} else if (map[snake[0].x][snake[0].y] === 2) {
+			} else if (map[snake[0].x][snake[0].y] === snakeBody) {
 				showGameOver();
 				return;
 			}
 
 			//keeps the head as part of the snake
-			map[snake[0].x][snake[0].y] = 2;
+			map[snake[0].x][snake[0].y] = snakeBody;
 		} else {
 			//removes the last piece of the snake
 			if (i === (snake.length - 1)) {
@@ -81,7 +88,7 @@ function drawGame() {
 
 			//moves the snake up
 			snake[i] = {x: snake[i - 1].x, y: snake[i - 1].y};
-			map[snake[i].x][snake[i].y] = 2;
+			map[snake[i].x][snake[i].y] = snakeBody;
 		}
 	}
 
@@ -91,11 +98,11 @@ function drawGame() {
 	//Cycles the matrix and draws the graphics
 	for (var x = 0; x < map.length; x++) {
 		for (var y = 0; y < map[x].length; y++) {
-			if (map[x][y] === 1) {
+			if (map[x][y] === snakeFood) {
 				ctx.fillStyle = 'black';
 				ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
 			}
-			if (map[x][y] === 2) {
+			if (map[x][y] === snakeBody) {
 				ctx.fillStyle = 'orange';
 				ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
 			}
@@ -126,13 +133,13 @@ function generateFood(map) {
 		rndY = Math.round(Math.random() * 19);
 
 	//Assures food doesn't land on the snake's body
-	while (map[rndX][rndY] === 2) {
+	while (map[rndX][rndY] === snakeBody) {
 		var rndX = Math.round(Math.random() * 19),
 			rndY = Math.round(Math.random() * 19);
 	}
 
 	//places the food out there
-	map[rndX][rndY] = 1;
+	map[rndX][rndY] = snakeFood;
 	return map;
 }
 
@@ -149,7 +156,7 @@ function generateSnake(map) {
 	//draws our snake onto the map
 	for (var i = 0; i < snake.length; i++) {
 		snake[i] = {x: rndX - i, y: rndY};
-		map[rndX - i][rndY] = 2;
+		map[rndX - i][rndY] = snakeBody;
 	}
 
 	return map;
