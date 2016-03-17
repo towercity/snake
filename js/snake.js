@@ -11,20 +11,34 @@ var canvas = document.getElementById('game-area'),
 	score = 0,
 	level = 0,
 	direction = 0,
+	snake = new Array(3),
+	speed = 500,
+	active = true,
 //explanatory variables
 	snakeFood = 1,
 	snakeBody = 2;
 	//snakeHead = 3;
 
-//matrices
+//matrix
 var map = new Array(50);
 for (var i = 0; i < map.length; i++) {
 	map[i] = new Array(50);
 }
 
-var snake = new Array(3);
-
 //functions
+
+//pulls in keystrokes to control snake
+window.addEventListener('keydown', function(e) {
+	if (e.keyCode === 38 && direction != 3) {
+		direction = 2; //up
+	} else if (e.keyCode === 40 && direction != 2) {
+		direction = 3; //down
+	} else if (e.keyCode === 37 && direction != 0) {
+		direction = 1; //left
+	} else if (e.keyCode === 39 && direction != 1) {
+		direction = 0; //right
+	}
+});
 
 //clears the canvas, redraws the frame
 function drawGame() {
@@ -39,7 +53,7 @@ function drawGame() {
 					snake[0] = {x: snake[0].x + 1, y: snake[0].y};
 					break;
 				case 1: //left
-					snake[0] = {x: snake[0].x + 1, y: snake[0].y};
+					snake[0] = {x: snake[0].x - 1, y: snake[0].y};
 					break;
 				case 2: //up
 					snake[0] = {x: snake[0].x, y: snake[0].y - 1};
@@ -111,7 +125,7 @@ function drawGame() {
 
 	//uses active variable to make sure game isnt over before continuing
 	if (active) {
-		//drawGame();
+		setTimeout(drawGame, speed - (level * 50));
 	}
 }
 
@@ -123,6 +137,7 @@ function drawMain() {
 	ctx.strokeRect(2, 20, canvas.width - 4, canvas.height - 24);
 
 	//display the score and level
+	ctx.fillStyle = 'black';
 	ctx.font = '14px sans-serif';
 	ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
 }
@@ -164,6 +179,8 @@ function generateSnake(map) {
 
 //potentially buggy--not showing when called in the console
 function showGameOver() {
+	active = false;
+
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	ctx.fillStyle = 'black';
