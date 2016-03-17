@@ -13,6 +13,12 @@ var canvas = document.getElementById('game-area'),
 
 //functions
 
+//cleras the canvas, redraws the frame
+function drawGame() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawMain();
+}
+
 //draws the frame of the game
 function drawMain() {
 	//draw a border around the edge of the canvas element
@@ -25,5 +31,5 @@ function drawMain() {
 	ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
 }
 
-drawMain();
+drawGame();
 
