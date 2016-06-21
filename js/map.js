@@ -14,7 +14,15 @@ var Map = function() {
 
 Map.prototype.init = function(snake) {
 	var self = this;
-  
+
+  //the intro screen
+  this.ctx.fillStyle = 'black';
+	this.ctx.font = '16px sans-serif';
+	this.ctx.fillText('Welcome to Online Snake', ((this.canvas.width / 2) - (this.ctx.measureText('Welcome to Online Snake').width / 2)), (this.canvas.height / 2));
+
+	this.ctx.font = '14px sans-serif';
+	this.ctx.fillText('Press any key to begin', ((this.canvas.width / 2) - (this.ctx.measureText('Press any key to begin').width / 2)), ((this.canvas.height / 2) + 25));
+
 	function startGame() {
 		window.removeEventListener('keydown', startGame);
 
