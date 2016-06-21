@@ -208,10 +208,6 @@ Map.prototype.gameOver = function(snake) {
 	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
 };
 
-//old code
-
-
-
 //create our map and snake
 var world = new Map();
 var hero = new Snake();
