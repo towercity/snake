@@ -10,19 +10,13 @@ var snakeFood = 1,
 
 //Snake object
 var Snake = function() {
-	//starting gameplay variables
-	this.score = 0;
-	this.level = 1;
-	this.direction = 0;
-	this.speed = 100;
 	this.active = true;
-
-	//the array of whose length contains our snake
-	this.body = new Array(3);
 };
 
 Snake.prototype.init = function() {
 	var self = this;
+
+	this.createSnake();
 
 	//pulls in keystrokes to control snake
 	window.addEventListener('keydown', function(e) {
@@ -36,6 +30,22 @@ Snake.prototype.init = function() {
 			self.direction = 0; //right
 		}
 	});
+};
+
+Snake.prototype.gameOver = function() {
+	this.body = null;
+};
+
+Snake.prototype.createSnake = function() {
+	//starting gameplay variables
+	this.score = 0;
+	this.level = 1;
+	this.direction = 0;
+	this.speed = 100;
+	this.active = true;
+
+	//the array of whose length contains our snake
+	this.body = new Array(3);
 };
 
 //Map object
@@ -52,9 +62,17 @@ var Map = function() {
 };
 
 Map.prototype.init = function(snake) {
-	this.generateSnake(snake);
-	this.generateFood();
-	this.render(snake);
+	var self = this;
+	function startGame() {
+		window.removeEventListener('keydown', startGame);
+
+		snake.init();
+		self.generateSnake(snake);
+		self.generateFood();
+		self.render(snake);
+	}
+
+	window.addEventListener('keydown', startGame);
 };
 
 Map.prototype.render = function(snake) {
@@ -206,11 +224,12 @@ Map.prototype.gameOver = function(snake) {
 
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
+
+	snake.gameOver();
 };
 
 //create our map and snake
 var world = new Map();
 var hero = new Snake();
 
-hero.init();
 world.init(hero);
