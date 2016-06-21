@@ -4,12 +4,6 @@ var Map = function() {
 	//canvas variables
 	this.canvas = document.getElementById('game-area');
 	this.ctx = this.canvas.getContext('2d');
-
-	//the game matrix
-	this.map = new Array(mapSize);
-	for(var i = 0; i < this.map.length; i++) {
-		this.map[i] = new Array(mapSize);
-	}
 };
 
 Map.prototype.init = function(snake) {
@@ -27,6 +21,7 @@ Map.prototype.init = function(snake) {
 		window.removeEventListener('keydown', startGame);
 
 		snake.init();
+    self.buildMatrix();
 		self.generateSnake(snake);
 		self.generateFood();
 		self.render(snake);
@@ -129,6 +124,13 @@ Map.prototype.render = function(snake) {
 	}
 };
 
+Map.prototype.buildMatrix = function() {
+  this.map = new Array(mapSize);
+	for(var i = 0; i < this.map.length; i++) {
+		this.map[i] = new Array(mapSize);
+	}
+};
+
 //draws the main frame of the game
 Map.prototype.drawMap = function(snake) {
 	//draw a border around the edge of the canvas element
@@ -176,7 +178,7 @@ Map.prototype.generateSnake = function(snake) {
 };
 
 Map.prototype.gameOver = function(snake) {
-	//this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	this.map = null;
 
 	this.ctx.fillStyle = 'black';
 	this.ctx.font = '16px sans-serif';
@@ -185,5 +187,20 @@ Map.prototype.gameOver = function(snake) {
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
 
+  this.ctx.fillText('Press any key to try again', ((this.canvas.width / 2) - (this.ctx.measureText('Press any key to try again').width / 2)), ((this.canvas.height / 2) + 50));
+
 	snake.gameOver();
+
+  var self = this;
+  function restartGame() {
+    window.removeEventListener('keydown', restartGame);
+
+		snake.init();
+    self.buildMatrix();
+		self.generateSnake(snake);
+		self.generateFood();
+		self.render(snake);
+  }
+
+  window.addEventListener('keydown', restartGame);
 };
