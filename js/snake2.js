@@ -21,6 +21,23 @@ var Snake = function() {
 	this.body = new Array(3);
 };
 
+Snake.prototype.init = function() {
+	var self = this;
+
+	//pulls in keystrokes to control snake
+	window.addEventListener('keydown', function(e) {
+		if (e.keyCode === 38 && self.direction != 3) {
+			self.direction = 2; //up
+		} else if (e.keyCode === 40 && self.direction != 2) {
+			self.direction = 3; //down
+		} else if (e.keyCode === 37 && self.direction !== 0) {
+			self.direction = 1; //left
+		} else if (e.keyCode === 39 && self.direction != 1) {
+			self.direction = 0; //right
+		}
+	});
+};
+
 //Map object
 var Map = function() {
 	//canvas variables
@@ -193,19 +210,11 @@ Map.prototype.gameOver = function(snake) {
 
 //old code
 
-//pulls in keystrokes to control snake
-window.addEventListener('keydown', function(e) {
-	if (e.keyCode === 38 && direction != 3) {
-		direction = 2; //up
-	} else if (e.keyCode === 40 && direction != 2) {
-		direction = 3; //down
-	} else if (e.keyCode === 37 && direction !== 0) {
-		direction = 1; //left
-	} else if (e.keyCode === 39 && direction != 1) {
-		direction = 0; //right
-	}
-});
 
-//clears the canvas, redraws the frame
- var world = new Map();
- var fred = new Snake();
+
+//create our map and snake
+var world = new Map();
+var hero = new Snake();
+
+hero.init();
+world.init(hero);
