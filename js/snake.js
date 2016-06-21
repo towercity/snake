@@ -33,7 +33,7 @@ window.addEventListener('keydown', function(e) {
 		direction = 2; //up
 	} else if (e.keyCode === 40 && direction != 2) {
 		direction = 3; //down
-	} else if (e.keyCode === 37 && direction != 0) {
+	} else if (e.keyCode === 37 && direction !== 0) {
 		direction = 1; //left
 	} else if (e.keyCode === 39 && direction != 1) {
 		direction = 0; //right
@@ -86,7 +86,7 @@ function drawGame() {
 					level += 1;
 				}
 
-			//checks if snake has hit itself	
+			//checks if snake has hit itself
 			} else if (map[snake[0].x][snake[0].y] === snakeBody) {
 				showGameOver();
 				return;
@@ -98,7 +98,7 @@ function drawGame() {
 			//removes the last piece of the snake
 			if (i === (snake.length - 1)) {
 				map[snake[i].x][snake[i].y] = null;
-			} 		
+			}
 
 			//moves the snake up
 			snake[i] = {x: snake[i - 1].x, y: snake[i - 1].y};
@@ -149,8 +149,8 @@ function generateFood(map) {
 
 	//Assures food doesn't land on the snake's body
 	while (map[rndX][rndY] === snakeBody) {
-		var rndX = Math.round(Math.random() * 19),
-			rndY = Math.round(Math.random() * 19);
+		rndX = Math.round(Math.random() * 19);
+		rndY = Math.round(Math.random() * 19);
 	}
 
 	//places the food out there
