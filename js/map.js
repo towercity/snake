@@ -13,7 +13,7 @@ Map.prototype.init = function(snake) {
 	this.ctx.fillText('Welcome to Online Snake', ((this.canvas.width / 2) - (this.ctx.measureText('Welcome to Online Snake').width / 2)), (this.canvas.height / 2));
 
 	this.ctx.font = '14px sans-serif';
-	this.ctx.fillText('Press any key to begin', ((this.canvas.width / 2) - (this.ctx.measureText('Press any key to begin').width / 2)), ((this.canvas.height / 2) + 25));
+	this.ctx.fillText('Press the shift key to begin', ((this.canvas.width / 2) - (this.ctx.measureText('Press the shift key to begin').width / 2)), ((this.canvas.height / 2) + 25));
 
 	this.startGame(snake);
 };
@@ -134,14 +134,16 @@ Map.prototype.drawMap = function(snake) {
 
 Map.prototype.startGame = function(snake) {
   var self = this;
-  function startGame() {
+  function startGame(e) {
     window.removeEventListener('keyup', startGame);
 
-		snake.init();
-    self.buildMatrix();
-		self.generateSnake(snake);
-		self.generateFood();
-		self.render(snake);
+    if (e.keyCode === 16) {
+      snake.init();
+      self.buildMatrix();
+  		self.generateSnake(snake);
+  		self.generateFood();
+  		self.render(snake);
+    }
   }
 
   window.addEventListener('keyup', startGame);
@@ -190,7 +192,7 @@ Map.prototype.gameOver = function(snake) {
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
 
-  this.ctx.fillText('Press any key to try again', ((this.canvas.width / 2) - (this.ctx.measureText('Press any key to try again').width / 2)), ((this.canvas.height / 2) + 50));
+  this.ctx.fillText('Press the shift key to try again', ((this.canvas.width / 2) - (this.ctx.measureText('Press the shift key to try again').width / 2)), ((this.canvas.height / 2) + 50));
 
 	snake.gameOver();
 
