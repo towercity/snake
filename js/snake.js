@@ -8,7 +8,7 @@
 var canvas = document.getElementById('game-area'),
 	ctx = canvas.getContext('2d'),
 //Gameplay variables
-	score = 0,
+//	score = 0,
 	level = 1,
 	direction = 0,
 	snake = new Array(3),

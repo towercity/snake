@@ -25,30 +25,46 @@ var Map = function() {
 	//canvas variables
 	this.canvas = document.getElementById('game-area');
 	this.ctx = this.canvas.getContext('2d');
+
+	//the game matrix
+	this.map = new Array(50);
+	for(var i = 0; i < this.map.length; i++) {
+		this.map[i] = new Array(50);
+	}
+};
+
+//draws the main frame of the game
+Map.prototype.render = function() {
+	//draw a border around the edge of the canvas element
+	this.ctx.lineWidth = 2;
+	this.ctx.strokeStyle = "black";
+	this.ctx.strokeRect(2, 20, this.canvas.width - 4, this.canvas.height - 24);
+
+	//display the score and level
+	this.ctx.fillStyle = 'black';
+	this.ctx.font = '14px sans-serif';
+	this.ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
+};
+
+//adds food to the map
+Map.prototype.generateFood = function() {
+	//Generates random x and y for food
+	var rndX = Math.round(Math.random() * 19),
+		rndY = Math.round(Math.random() * 19);
+
+	//Assures food doesn't land on the snake's body
+	while (map[rndX][rndY] === snakeBody) {
+		rndX = Math.round(Math.random() * 19);
+		rndY = Math.round(Math.random() * 19);
+	}
+
+	//places the food out there
+	this.map[rndX][rndY] = snakeFood;
 };
 
 //old code
 
-//matrix
-var map = new Array(50);
-for (var i = 0; i < map.length; i++) {
-	map[i] = new Array(50);
-}
-
 //functions
-
-//pulls in keystrokes to control snake
-window.addEventListener('keydown', function(e) {
-	if (e.keyCode === 38 && direction != 3) {
-		direction = 2; //up
-	} else if (e.keyCode === 40 && direction != 2) {
-		direction = 3; //down
-	} else if (e.keyCode === 37 && direction !== 0) {
-		direction = 1; //left
-	} else if (e.keyCode === 39 && direction != 1) {
-		direction = 0; //right
-	}
-});
 
 //clears the canvas, redraws the frame
 function drawGame() {
@@ -139,35 +155,6 @@ function drawGame() {
 	}
 }
 
-//draws the frame of the game
-function drawMain() {
-	//draw a border around the edge of the canvas element
-	ctx.lineWidth = 2;
-	ctx.strokeStyle = "black";
-	ctx.strokeRect(2, 20, canvas.width - 4, canvas.height - 24);
-
-	//display the score and level
-	ctx.fillStyle = 'black';
-	ctx.font = '14px sans-serif';
-	ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
-}
-
-function generateFood(map) {
-	//Generates random x and y for food
-	var rndX = Math.round(Math.random() * 19),
-		rndY = Math.round(Math.random() * 19);
-
-	//Assures food doesn't land on the snake's body
-	while (map[rndX][rndY] === snakeBody) {
-		rndX = Math.round(Math.random() * 19);
-		rndY = Math.round(Math.random() * 19);
-	}
-
-	//places the food out there
-	map[rndX][rndY] = snakeFood;
-	return map;
-}
-
 function generateSnake(map) {
 	var rndX = Math.round(Math.random() * 19),
 		rndY = Math.round(Math.random() * 19);
@@ -206,3 +193,16 @@ function showGameOver() {
 map = generateFood(map);
 map = generateSnake(map);
 drawGame();
+
+//pulls in keystrokes to control snake
+window.addEventListener('keydown', function(e) {
+	if (e.keyCode === 38 && direction != 3) {
+		direction = 2; //up
+	} else if (e.keyCode === 40 && direction != 2) {
+		direction = 3; //down
+	} else if (e.keyCode === 37 && direction !== 0) {
+		direction = 1; //left
+	} else if (e.keyCode === 39 && direction != 1) {
+		direction = 0; //right
+	}
+});
