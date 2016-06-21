@@ -2,12 +2,22 @@
 	Snake game based on tutorial from http://www.andrespagella.com/snake-game
 */
 
+//Explanatory variables
+var snakeFood = 1,
+		snakeBody = 2,
+		snakeHead = 3;
+
 //Snake object
 var Snake = function() {
 	//starting gameplay variables
 	this.score = 0;
 	this.level = 1;
 	this.direction = 0;
+	this.speed = 100;
+	this.active = true;
+
+	//the array of whose length contains our snake
+	this.snake = new Array(3);
 };
 
 //Map object
@@ -18,18 +28,6 @@ var Map = function() {
 };
 
 //old code
-
-//Gameplay variables
-	score = 0,
-	level = 1,
-	direction = 0,
-	snake = new Array(3),
-	speed = 100,
-	active = true,
-//explanatory variables
-	snakeFood = 1,
-	snakeBody = 2;
-	//snakeHead = 3;
 
 //matrix
 var map = new Array(50);
