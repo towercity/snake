@@ -2,11 +2,23 @@
 	Snake game based on tutorial from http://www.andrespagella.com/snake-game
 */
 
-//variables
+//Snake object
+var Snake = function() {
+	//starting gameplay variables
+	this.score = 0;
+	this.level = 1;
+	this.direction = 0;
+};
 
-//canvas variables
-var canvas = document.getElementById('game-area'),
-	ctx = canvas.getContext('2d'),
+//Map object
+var Map = function() {
+	//canvas variables
+	this.canvas = document.getElementById('game-area');
+	this.ctx = this.canvas.getContext('2d');
+};
+
+//old code
+
 //Gameplay variables
 	score = 0,
 	level = 1,
