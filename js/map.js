@@ -7,8 +7,6 @@ var Map = function() {
 };
 
 Map.prototype.init = function(snake) {
-	var self = this;
-
   //the intro screen
   this.ctx.fillStyle = 'black';
 	this.ctx.font = '16px sans-serif';
@@ -17,17 +15,7 @@ Map.prototype.init = function(snake) {
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Press any key to begin', ((this.canvas.width / 2) - (this.ctx.measureText('Press any key to begin').width / 2)), ((this.canvas.height / 2) + 25));
 
-	function startGame() {
-		window.removeEventListener('keydown', startGame);
-
-		snake.init();
-    self.buildMatrix();
-		self.generateSnake(snake);
-		self.generateFood();
-		self.render(snake);
-	}
-
-	window.addEventListener('keydown', startGame);
+	this.startGame(snake);
 };
 
 Map.prototype.render = function(snake) {
@@ -144,6 +132,21 @@ Map.prototype.drawMap = function(snake) {
 	this.ctx.fillText('Score: ' + snake.score + ' - Level: ' + snake.level, 2, 12);
 };
 
+Map.prototype.startGame = function(snake) {
+  var self = this;
+  function startGame() {
+    window.removeEventListener('keyup', startGame);
+
+		snake.init();
+    self.buildMatrix();
+		self.generateSnake(snake);
+		self.generateFood();
+		self.render(snake);
+  }
+
+  window.addEventListener('keyup', startGame);
+};
+
 //adds food to the map
 Map.prototype.generateFood = function() {
 	//Generates random x and y for food
@@ -191,16 +194,5 @@ Map.prototype.gameOver = function(snake) {
 
 	snake.gameOver();
 
-  var self = this;
-  function restartGame() {
-    window.removeEventListener('keydown', restartGame);
-
-		snake.init();
-    self.buildMatrix();
-		self.generateSnake(snake);
-		self.generateFood();
-		self.render(snake);
-  }
-
-  window.addEventListener('keydown', restartGame);
+  this.startGame(snake);
 };
