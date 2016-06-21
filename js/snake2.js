@@ -41,7 +41,7 @@ Map.prototype.init = function(snake) {
 };
 
 Map.prototype.render = function(snake) {
-	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	var self = this;
 
 	//moves down the snake pieces, starting at the bottom
 	for (var i = snake.body.length - 1; i >= 0; i--) {
@@ -67,6 +67,7 @@ Map.prototype.render = function(snake) {
 			//checks if snake is out of bounds, returns game over
 			if (snake.body[0].x < 0 || snake.body[0].x >= mapSize ||
 					snake.body[0].y < 0 || snake.body[0].y >= mapSize) {
+						snake.active = false;
 						this.gameOver(snake);
 						return;
 			}
@@ -87,6 +88,7 @@ Map.prototype.render = function(snake) {
 
 		//checks if snake has hit itself
 		} else if (this.map[snake.body[0].x][snake.body[0].y] === snakeBody) {
+				snake.active = false;
 				this.gameOver(snake);
 				return;
 			}
@@ -105,6 +107,8 @@ Map.prototype.render = function(snake) {
 		}
 	}
 
+
+	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	//put up the canvas frame and score
 	this.drawMap(snake);
 
@@ -123,15 +127,11 @@ Map.prototype.render = function(snake) {
 	}
 
 	//uses active variable to make sure game isnt over before continuing
-
-	/*
 	if (snake.active) {
 		setTimeout(function() {
-			Map.render(snake);
+			self.render(snake);
 		}, snake.speed - ((snake.level - 1) * 50));
 	}
-	*/
-
 };
 
 //draws the main frame of the game
