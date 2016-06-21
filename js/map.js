@@ -1,54 +1,5 @@
-/*
-	Snake game based on tutorial from http://www.andrespagella.com/snake-game
-*/
-
-//Explanatory variables
-var snakeFood = 1,
-		snakeBody = 2,
-		snakeHead = 3,
-		mapSize = 50;
-
-//Snake object
-var Snake = function() {
-	this.active = true;
-};
-
-Snake.prototype.init = function() {
-	var self = this;
-
-	this.createSnake();
-
-	//pulls in keystrokes to control snake
-	window.addEventListener('keydown', function(e) {
-		if (e.keyCode === 38 && self.direction != 3) {
-			self.direction = 2; //up
-		} else if (e.keyCode === 40 && self.direction != 2) {
-			self.direction = 3; //down
-		} else if (e.keyCode === 37 && self.direction !== 0) {
-			self.direction = 1; //left
-		} else if (e.keyCode === 39 && self.direction != 1) {
-			self.direction = 0; //right
-		}
-	});
-};
-
-Snake.prototype.gameOver = function() {
-	this.body = null;
-};
-
-Snake.prototype.createSnake = function() {
-	//starting gameplay variables
-	this.score = 0;
-	this.level = 1;
-	this.direction = 0;
-	this.speed = 100;
-	this.active = true;
-
-	//the array of whose length contains our snake
-	this.body = new Array(3);
-};
-
 //Map object
+
 var Map = function() {
 	//canvas variables
 	this.canvas = document.getElementById('game-area');
@@ -63,6 +14,7 @@ var Map = function() {
 
 Map.prototype.init = function(snake) {
 	var self = this;
+  
 	function startGame() {
 		window.removeEventListener('keydown', startGame);
 
@@ -227,9 +179,3 @@ Map.prototype.gameOver = function(snake) {
 
 	snake.gameOver();
 };
-
-//create our map and snake
-var world = new Map();
-var hero = new Snake();
-
-world.init(hero);
