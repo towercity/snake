@@ -108,7 +108,7 @@ Map.prototype.render = function(snake) {
 	if (snake.active) {
 		setTimeout(function() {
 			self.render(snake);
-		}, snake.speed - ((snake.level - 1) * 50));
+		}, snake.speed - ((snake.level - 1) * 8.77));
 	}
 };
 
@@ -134,19 +134,19 @@ Map.prototype.drawMap = function(snake) {
 
 Map.prototype.startGame = function(snake) {
   var self = this;
-  function startGame(e) {
-    window.removeEventListener('keyup', startGame);
 
+  function startGame(e) {
     if (e.keyCode === 16) {
       snake.init();
       self.buildMatrix();
-  		self.generateSnake(snake);
+    	self.generateSnake(snake);
   		self.generateFood();
   		self.render(snake);
+      window.removeEventListener('keydown', startGame);
     }
   }
 
-  window.addEventListener('keyup', startGame);
+  window.addEventListener('keydown', startGame);
 };
 
 //adds food to the map
