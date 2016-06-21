@@ -1,7 +1,7 @@
 //Snake object
 
 var Snake = function() {
-	this.active = true;
+	this.speed = 100;
 };
 
 Snake.prototype.init = function() {
@@ -28,7 +28,6 @@ Snake.prototype.createSnake = function() {
 	this.score = 0;
 	this.level = 1;
 	this.direction = 0;
-	this.speed = 100;
 	this.active = true;
 
 	//the array of whose length contains our snake
