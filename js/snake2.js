@@ -180,25 +180,18 @@ Map.prototype.generateSnake = function(snake) {
 	}
 };
 
+Map.prototype.gameOver = function(snake) {
+	//this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+	this.ctx.fillStyle = 'black';
+	this.ctx.font = '16px sans-serif';
+	this.ctx.fillText('Game over', ((this.canvas.width / 2) - (this.ctx.measureText('Game over').width / 2)), (this.canvas.height / 2));
+
+	this.ctx.font = '14px sans-serif';
+	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
+};
+
 //old code
-
-//functions
-
-
-
-//potentially buggy--not showing when called in the console
-function showGameOver() {
-	active = false;
-
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-	ctx.fillStyle = 'black';
-	ctx.font = '16px sans-serif';
-	ctx.fillText('Game over', ((canvas.width / 2) - (ctx.measureText('Game over') / 2)), (canvas.height / 2));
-
-	ctx.font = '14px sans-serif';
-	ctx.fillText('Your score was ' + score, ((canvas.width / 2) - (ctx.measureText('Your score was ' + score) / 2)), ((canvas.height / 2) + 25));
-}
 
 //pulls in keystrokes to control snake
 window.addEventListener('keydown', function(e) {
