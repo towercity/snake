@@ -95,11 +95,11 @@ Map.prototype.render = function(snake) {
 		for (var y = 0; y < this.map[x].length; y++) {
 			if (this.map[x][y] === snakeFood) {
 				this.ctx.fillStyle = 'black';
-				this.ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
 			if (this.map[x][y] === snakeBody) {
 				this.ctx.fillStyle = 'orange';
-				this.ctx.fillRect(x * 10, y * 10 + 20, 10, 10);
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
 		}
 	}

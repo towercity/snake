@@ -7,4 +7,3 @@ Clone the reposity and open index.html. Use the arrow keys to move. Refresh the 
 
 ## To Do:
 - Make the snake's head a different color to help differentiate it
-- Fix the 1px offset on the map
