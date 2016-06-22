@@ -89,23 +89,7 @@ Map.prototype.render = function(snake) {
 	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	//put up the canvas frame and score
 	this.drawMap(snake);
-
-	//Cycles the matrix and draws the graphics
-	for (var x = 0; x < this.map.length; x++) {
-		for (var y = 0; y < this.map[x].length; y++) {
-			if (this.map[x][y] === snakeFood) {
-				this.ctx.fillStyle = 'black';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
-			}
-			if (this.map[x][y] === snakeHead) {
-				this.ctx.fillStyle = '#ffcc00';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);			}
-			if (this.map[x][y] === snakeBody) {
-				this.ctx.fillStyle = '#ffcc77';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
-			}
-		}
-	}
+	this.drawItems(snake);
 
 	//uses active variable to make sure game isnt over before continuing
 	if (snake.active) {
@@ -134,6 +118,46 @@ Map.prototype.drawMap = function(snake) {
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Score: ' + snake.score + ' - Level: ' + snake.level, 2, 12);
 };
+
+Map.prototype.drawItems = function(snake) {
+  //Cycles the matrix and draws the graphics
+	for (var x = 0; x < this.map.length; x++) {
+		for (var y = 0; y < this.map[x].length; y++) {
+			if (this.map[x][y] === snakeFood) {
+				this.ctx.fillStyle = 'black';
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+			}
+			if (this.map[x][y] === snakeHead) {
+				this.ctx.fillStyle = '#ffcc00';
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+        //eyes!
+        this.ctx.fillStyle = 'black';
+        switch(snake.direction) {
+          case 0: //right
+            this.ctx.fillRect(x * 10 + 8, y * 10 + 21, 2, 2);
+            this.ctx.fillRect(x * 10 + 8, y * 10 + 25, 2, 2);
+  					break;
+  				case 1: //left
+            this.ctx.fillRect(x * 10 + 4, y * 10 + 21, 2, 2);
+            this.ctx.fillRect(x * 10 + 4, y * 10 + 25, 2, 2);
+  					break;
+  				case 2: //up
+            this.ctx.fillRect(x * 10 + 7, y * 10 + 22, 2, 2);
+            this.ctx.fillRect(x * 10 + 3, y * 10 + 22, 2, 2);
+  					break;
+  				case 3: //down
+            this.ctx.fillRect(x * 10 + 7, y * 10 + 26, 2, 2);
+            this.ctx.fillRect(x * 10 + 3, y * 10 + 26, 2, 2);
+  					break;
+          }
+      	}
+			if (this.map[x][y] === snakeBody) {
+				this.ctx.fillStyle = '#ffcc77';
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+			}
+		}
+	}
+}
 
 Map.prototype.startGame = function(snake) {
   var self = this;
