@@ -71,8 +71,8 @@ Map.prototype.render = function(snake) {
 				return;
 			}
 
-			//keeps the head as part of the snake
-			this.map[snake.body[0].x][snake.body[0].y] = snakeBody;
+			//grows the snake at the head
+			this.map[snake.body[0].x][snake.body[0].y] = snakeHead;
 		} else {
 			//removes the last piece of the snake
 			if (i === (snake.body.length - 1)) {
@@ -97,8 +97,11 @@ Map.prototype.render = function(snake) {
 				this.ctx.fillStyle = 'black';
 				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
+			if (this.map[x][y] === snakeHead) {
+				this.ctx.fillStyle = '#ffcc00';
+				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);			}
 			if (this.map[x][y] === snakeBody) {
-				this.ctx.fillStyle = 'orange';
+				this.ctx.fillStyle = '#ffcc77';
 				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
 		}
