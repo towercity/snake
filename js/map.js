@@ -11,11 +11,11 @@ Map.prototype.init = function(snake) {
 	this.ctx.fillRect(0, 0, this.canvas.width, 20);
 
   //the intro screen
-  this.ctx.fillStyle = '#FFA300';
-	this.ctx.font = '16px sans-serif';
+  this.ctx.fillStyle = '#008751';
+	this.ctx.font = '14px monospace';
 	this.ctx.fillText('Welcome to Online Snake', ((this.canvas.width / 2) - (this.ctx.measureText('Welcome to Online Snake').width / 2)), (this.canvas.height / 2));
 
-	this.ctx.font = '14px sans-serif';
+	this.ctx.font = '14px monospace';
 	this.ctx.fillText('Press the shift key to begin', ((this.canvas.width / 2) - (this.ctx.measureText('Press the shift key to begin').width / 2)), ((this.canvas.height / 2) + 25));
 
 	this.startGame(snake);
@@ -116,8 +116,8 @@ Map.prototype.drawMap = function(snake) {
 	this.ctx.fillRect(0, 0, this.canvas.width, 20);
 
 	//display the score and level
-	this.ctx.fillStyle = '#FFA300';
-	this.ctx.font = '14px sans-serif';
+	this.ctx.fillStyle = '#008751';
+	this.ctx.font = '14px monospace';
 	this.ctx.fillText('Score: ' + snake.score + ' - Level: ' + snake.level, 2, 12);
 };
 
@@ -127,35 +127,42 @@ Map.prototype.drawItems = function(snake) {
 		for (var y = 0; y < this.map[x].length; y++) {
 			if (this.map[x][y] === snakeFood) {
 				this.ctx.fillStyle = '#FFA300';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				// this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				this.ctx.fillText("f", (x * 10) + 2, (y * 10) + 30);
 			}
-			if (this.map[x][y] === snakeHead) {
+			else if (this.map[x][y] === snakeHead) {
 				this.ctx.fillStyle = '#FFA300';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				// this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				this.ctx.fillText("0", (x * 10) + 2, (y * 10) + 30);
         //eyes!
         this.ctx.fillStyle = 'black';
         switch(snake.direction) {
           case 0: //right
-            this.ctx.fillRect(x * 10 + 8, y * 10 + 21, 2, 2);
-            this.ctx.fillRect(x * 10 + 8, y * 10 + 25, 2, 2);
+            // this.ctx.fillRect(x * 10 + 8, y * 10 + 21, 2, 2);
+            // this.ctx.fillRect(x * 10 + 8, y * 10 + 25, 2, 2);
   					break;
   				case 1: //left
-            this.ctx.fillRect(x * 10 + 4, y * 10 + 21, 2, 2);
-            this.ctx.fillRect(x * 10 + 4, y * 10 + 25, 2, 2);
+            // this.ctx.fillRect(x * 10 + 4, y * 10 + 21, 2, 2);
+            // this.ctx.fillRect(x * 10 + 4, y * 10 + 25, 2, 2);
   					break;
   				case 2: //up
-            this.ctx.fillRect(x * 10 + 7, y * 10 + 22, 2, 2);
-            this.ctx.fillRect(x * 10 + 3, y * 10 + 22, 2, 2);
+            // this.ctx.fillRect(x * 10 + 7, y * 10 + 22, 2, 2);
+            // this.ctx.fillRect(x * 10 + 3, y * 10 + 22, 2, 2);
   					break;
   				case 3: //down
-            this.ctx.fillRect(x * 10 + 7, y * 10 + 26, 2, 2);
-            this.ctx.fillRect(x * 10 + 3, y * 10 + 26, 2, 2);
+            // this.ctx.fillRect(x * 10 + 7, y * 10 + 26, 2, 2);
+            // this.ctx.fillRect(x * 10 + 3, y * 10 + 26, 2, 2);
   					break;
           }
       	}
-			if (this.map[x][y] === snakeBody) {
+			else if (this.map[x][y] === snakeBody) {
 				this.ctx.fillStyle = '#FFA300';
-				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				// this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
+				this.ctx.fillText("0", (x * 10) + 2, (y * 10) + 30);
+			}
+			else {
+				this.ctx.fillStyle = '#008751';
+				this.ctx.fillText("#", (x * 10) + 2, (y * 10) + 30);
 			}
 		}
 	}
@@ -214,11 +221,14 @@ Map.prototype.generateSnake = function(snake) {
 Map.prototype.gameOver = function(snake) {
 	this.map = null;
 
-	this.ctx.fillStyle = '#FFA300';
-	this.ctx.font = '16px sans-serif';
-	this.ctx.fillText('Game over', ((this.canvas.width / 2) - (this.ctx.measureText('Game over').width / 2)), (this.canvas.height / 2));
+	this.ctx.fillStyle = 'black';
+	this.ctx.fillRect((this.canvas.width / 8), (this.canvas.height / 4), ((this.canvas.width / 8) * 6), (this.canvas.height / 2));
 
-	this.ctx.font = '14px sans-serif';
+	this.ctx.fillStyle = '#FFA300';
+	this.ctx.font = '14px monospace';
+	this.ctx.fillText('Game over', ((this.canvas.width / 2) - (this.ctx.measureText('Game over').width / 2)), ((this.canvas.height / 2) - 50));
+
+	this.ctx.font = '14px monospace';
 	this.ctx.fillText('Your score was ' + snake.score, ((this.canvas.width / 2) - (this.ctx.measureText('Your score was ' + snake.score).width / 2)), ((this.canvas.height / 2) + 25));
 
   this.ctx.fillText('Press the shift key to try again', ((this.canvas.width / 2) - (this.ctx.measureText('Press the shift key to try again').width / 2)), ((this.canvas.height / 2) + 50));
