@@ -224,7 +224,7 @@ Map.prototype.gameOver = function(snake) {
 	this.ctx.fillStyle = 'black';
 	this.ctx.fillRect((this.canvas.width / 8), (this.canvas.height / 4), ((this.canvas.width / 8) * 6), (this.canvas.height / 2));
 
-	this.ctx.fillStyle = '#FFA300';
+	this.ctx.fillStyle = '#008751';
 	this.ctx.font = '14px monospace';
 	this.ctx.fillText('Game over', ((this.canvas.width / 2) - (this.ctx.measureText('Game over').width / 2)), ((this.canvas.height / 2) - 50));
 
