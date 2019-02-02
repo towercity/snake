@@ -7,8 +7,11 @@ var Map = function() {
 };
 
 Map.prototype.init = function(snake) {
+	this.ctx.fillStyle = 'black';
+	this.ctx.fillRect(0, 0, this.canvas.width, 20);
+
   //the intro screen
-  this.ctx.fillStyle = 'black';
+  this.ctx.fillStyle = '#FFA300';
 	this.ctx.font = '16px sans-serif';
 	this.ctx.fillText('Welcome to Online Snake', ((this.canvas.width / 2) - (this.ctx.measureText('Welcome to Online Snake').width / 2)), (this.canvas.height / 2));
 
@@ -108,13 +111,12 @@ Map.prototype.buildMatrix = function() {
 
 //draws the main frame of the game
 Map.prototype.drawMap = function(snake) {
-	//draw a border around the edge of the canvas element
-	this.ctx.lineWidth = 2;
-	this.ctx.strokeStyle = "black";
-	this.ctx.strokeRect(2, 20, this.canvas.width - 4, this.canvas.height - 24);
+	//draw a black box up top
+	this.ctx.fillStyle = 'black';
+	this.ctx.fillRect(0, 0, this.canvas.width, 20);
 
 	//display the score and level
-	this.ctx.fillStyle = 'black';
+	this.ctx.fillStyle = '#FFA300';
 	this.ctx.font = '14px sans-serif';
 	this.ctx.fillText('Score: ' + snake.score + ' - Level: ' + snake.level, 2, 12);
 };
@@ -124,11 +126,11 @@ Map.prototype.drawItems = function(snake) {
 	for (var x = 0; x < this.map.length; x++) {
 		for (var y = 0; y < this.map[x].length; y++) {
 			if (this.map[x][y] === snakeFood) {
-				this.ctx.fillStyle = 'black';
+				this.ctx.fillStyle = '#FFA300';
 				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
 			if (this.map[x][y] === snakeHead) {
-				this.ctx.fillStyle = '#ffcc00';
+				this.ctx.fillStyle = '#FFA300';
 				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
         //eyes!
         this.ctx.fillStyle = 'black';
@@ -152,7 +154,7 @@ Map.prototype.drawItems = function(snake) {
           }
       	}
 			if (this.map[x][y] === snakeBody) {
-				this.ctx.fillStyle = '#ffcc77';
+				this.ctx.fillStyle = '#FFA300';
 				this.ctx.fillRect(x * 10 + 2, y * 10 + 20, 10, 10);
 			}
 		}
@@ -212,7 +214,7 @@ Map.prototype.generateSnake = function(snake) {
 Map.prototype.gameOver = function(snake) {
 	this.map = null;
 
-	this.ctx.fillStyle = 'black';
+	this.ctx.fillStyle = '#FFA300';
 	this.ctx.font = '16px sans-serif';
 	this.ctx.fillText('Game over', ((this.canvas.width / 2) - (this.ctx.measureText('Game over').width / 2)), (this.canvas.height / 2));
 
